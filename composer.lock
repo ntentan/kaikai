@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7e0f9080257b24f58f61be2860ab5cf6",
+    "hash": "5642207fcf33a0196c1ce1a095e8ef3e",
     "packages": [
         {
             "name": "ntentan/utils",
-            "version": "dev-master",
+            "version": "v0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ntentan/utils.git",
-                "reference": "e739f8c212bbca0d35b1012652e547336c11beb9"
+                "reference": "5957a0a3caa8ce42f92f51bbdacfd62782391679"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ntentan/utils/zipball/e739f8c212bbca0d35b1012652e547336c11beb9",
-                "reference": "e739f8c212bbca0d35b1012652e547336c11beb9",
+                "url": "https://api.github.com/repos/ntentan/utils/zipball/5957a0a3caa8ce42f92f51bbdacfd62782391679",
+                "reference": "5957a0a3caa8ce42f92f51bbdacfd62782391679",
                 "shasum": ""
             },
             "require-dev": {
@@ -40,15 +40,13 @@
                 }
             ],
             "description": "Common utility functions shared accross the ntentan framework.",
-            "time": "2015-08-23 10:27:43"
+            "time": "2015-08-12 06:32:09"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "ntentan/utils": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
