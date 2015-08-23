@@ -9,5 +9,10 @@
             "name": "ekow",
             "email": "your@email.here"
         }
-    ]
+    ],    
+    "autoload": {
+        "psr-4": {
+            "ntentan\\nibii\\": "src/"
+        }
+    }
 }
