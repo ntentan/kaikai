@@ -1,0 +1,13 @@
+{
+    "name": "ntentan/kaikai",
+    "description": "Caching for Ntentan Framework",
+    "require": {
+        "ntentan/utils" : "dev-master"
+    },
+    "authors": [
+        {
+            "name": "ekow",
+            "email": "your@email.here"
+        }
+    ]
+}
