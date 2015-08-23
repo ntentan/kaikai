@@ -18,14 +18,14 @@ use ntentan\utils\Utils;
  */
 class Cache
 {
-    private $options;
-    private $backendClass = '\ntentan\kaikai\backends\VolatileCache';
-    private $backendObject;
+    private static $options;
+    private static $backendClass = '\ntentan\kaikai\backends\VolatileCache';
+    private static $backendObject;
     
     public static function init($config)
     {
-        $this->backendClass = '\ntentan\kaikai\backends\\' . Text::ucamelize($config['backend']) . 'Cache';
-        $this->options = $config;
+        self::$backendClass = '\ntentan\kaikai\backends\\' . Text::ucamelize($config['backend']) . 'Cache';
+        self::$options = $config;
     }
     
     /**
@@ -34,10 +34,10 @@ class Cache
      */
     private static function getInstance()
     {
-        return Utils::factory($this->backendObject, 
+        return Utils::factory(self::$backendObject, 
             function(){
-                $class = $this->backendClass;
-                return new $class($this->options);
+                $class = self::$backendClass;
+                return new $class(self::$options);
             }
         );
     }
@@ -65,5 +65,10 @@ class Cache
     public static function delete($key)
     {
         return self::getInstance()->delete($key);
+    }
+    
+    public static function reset()
+    {
+        self::$backendObject = null;
     }
 }
