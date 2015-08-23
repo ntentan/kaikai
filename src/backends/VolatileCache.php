@@ -33,7 +33,7 @@ class VolatileCache implements \ntentan\kaikai\CacheBackendInterface
 
     public function read($key)
     {
-        return $this->cache[$key];
+        return isset($this->cache[$key]) ? $this->cache[$key] : false;
     }
 
     public function write($key, $value)
