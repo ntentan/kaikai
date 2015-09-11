@@ -24,7 +24,9 @@ class Cache
     
     public static function init($config)
     {
-        self::$backendClass = '\ntentan\kaikai\backends\\' . Text::ucamelize($config['backend']) . 'Cache';
+        if(isset($config['backend'])) {
+            self::$backendClass = '\ntentan\kaikai\backends\\' . Text::ucamelize($config['backend']) . 'Cache';
+        }
         self::$options = $config;
     }
     
