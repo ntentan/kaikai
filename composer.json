@@ -2,7 +2,7 @@
     "name": "ntentan/kaikai",
     "description": "Caching for Ntentan Framework",
     "require": {
-        "ntentan/utils" : "0.*"
+        "ntentan/utils" : "dev-master"
     },
     "authors": [
         {
