@@ -4,19 +4,16 @@ namespace ntentan\kaikai;
 
 use ntentan\utils\Text;
 use ntentan\utils\Utils;
+use ntentan\config\Config;
 
 class Cache
 {
-    private static $options;
-    private static $backendClass = '\ntentan\kaikai\backends\VolatileCache';
-    private static $backendObject;
+    private static $backendClass;
     
-    public static function init($config)
+    public static function init()
     {
-        if(isset($config['backend'])) {
-            self::$backendClass = '\ntentan\kaikai\backends\\' . Text::ucamelize($config['backend']) . 'Cache';
-        }
-        self::$options = $config;
+        $backend = Config::get('cache.backend', 'volatile');
+        self::$backendClass = '\ntentan\kaikai\backends\\' . Text::ucamelize($backend) . 'Cache';
     }
     
     /**
@@ -25,12 +22,14 @@ class Cache
      */
     private static function getInstance()
     {
-        return Utils::factory(self::$backendObject, 
+        return \ntentan\panie\InjectionContainer::singleton(self::$backendClass);
+        /*return Utils::factory(self::$backendObject, 
             function(){
                 $class = self::$backendClass;
                 return new $class(self::$options);
             }
-        );
+        );*/
+        
     }
     
     public static function write($key, $value)
