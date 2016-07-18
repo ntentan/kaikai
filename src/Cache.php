@@ -3,35 +3,38 @@
 namespace ntentan\kaikai;
 
 use ntentan\utils\Text;
-use ntentan\utils\Utils;
 use ntentan\config\Config;
 
 class Cache
 {
     private static $backendClass;
     
+    /**
+     * Initialize the caching engine.
+     * Reads the current configuration to determine the caching backend to use.
+     */
     public static function init()
     {
-        $backend = Config::get('cache.backend', 'volatile');
+        $backend = Config::get('ntentan:cache.backend', 'volatile');
         self::$backendClass = '\ntentan\kaikai\backends\\' . Text::ucamelize($backend) . 'Cache';
     }
     
     /**
+     * Returns an instance of the current caching backend.
      * 
      * @return \ntentan\kaikai\CacheBackendInterface
      */
     private static function getInstance()
     {
         return \ntentan\panie\InjectionContainer::singleton(self::$backendClass);
-        /*return Utils::factory(self::$backendObject, 
-            function(){
-                $class = self::$backendClass;
-                return new $class(self::$options);
-            }
-        );*/
-        
     }
     
+    /**
+     * Write to the currently initialized cache backend.
+     * 
+     * @param string $key
+     * @param string $value
+     */
     public static function write($key, $value)
     {
         self::getInstance()->write($key, $value);
