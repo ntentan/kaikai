@@ -33,6 +33,10 @@ class Cache {
     public function delete($key) {
         return $this->backend->delete($key);
     }
+    
+    public static function getBackendClassName($backend) {
+        return '\ntentan\kaikai\backends\\' . Text::ucamelize($backend) . 'Cache';
+    }
 
 }
 
