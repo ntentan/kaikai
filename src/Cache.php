@@ -3,16 +3,14 @@
 namespace ntentan\kaikai;
 
 use ntentan\utils\Text;
-use ntentan\config\Config;
 use ntentan\panie\Container;
 
 class Cache {
 
     private $backend;
 
-    public function __construct(Container $container) {
-        $backendClass = '\ntentan\kaikai\backends\\' . Text::ucamelize(Config::get('cache.backend', 'volatile')) . 'Cache';
-        $this->backend = $container->resolve($backendClass);
+    public function __construct(CacheBackendInterface $backend) {
+        $this->backend = $backend;
     }
 
     public function write($key, $value) {
