@@ -8,21 +8,21 @@
     "packages": [
         {
             "name": "ntentan/utils",
-            "version": "v0.4.0",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ntentan/utils.git",
-                "reference": "ebe83b958d4a096a34f3c5db4f4bbb80f5e6a877"
+                "reference": "78c4ab521db9e0955ad60b0abfff94c70a281b09"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ntentan/utils/zipball/ebe83b958d4a096a34f3c5db4f4bbb80f5e6a877",
-                "reference": "ebe83b958d4a096a34f3c5db4f4bbb80f5e6a877",
+                "url": "https://api.github.com/repos/ntentan/utils/zipball/78c4ab521db9e0955ad60b0abfff94c70a281b09",
+                "reference": "78c4ab521db9e0955ad60b0abfff94c70a281b09",
                 "shasum": ""
             },
             "require-dev": {
                 "mikey179/vfsstream": "~1.0",
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "@stable"
             },
             "type": "library",
             "autoload": {
@@ -42,7 +42,7 @@
                 }
             ],
             "description": "Common utility functions shared accross the ntentan framework.",
-            "time": "2017-06-26T02:54:17+00:00"
+            "time": "2017-07-25T01:30:37+00:00"
         }
     ],
     "packages-dev": [],
