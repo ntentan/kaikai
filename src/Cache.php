@@ -2,8 +2,6 @@
 
 namespace ntentan\kaikai;
 
-use ntentan\utils\Text;
-
 class Cache
 {
 
