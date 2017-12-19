@@ -2,12 +2,14 @@
 
 namespace ntentan\kaikai\backends;
 
-class FileCache implements \ntentan\kaikai\CacheBackendInterface
+use ntentan\kaikai\CacheBackendInterface;
+
+class FileCache implements CacheBackendInterface
 {
     private $path;
-    private $ttl = 3600;
+    private $tempItem;
     
-    public function __construct($options)
+    public function __construct($options = null)
     {
         $this->path = isset($options['path']) ? $options['path'] : 'cache';
     }
@@ -17,44 +19,44 @@ class FileCache implements \ntentan\kaikai\CacheBackendInterface
         return "{$this->path}" . DIRECTORY_SEPARATOR . md5($key);
     }
     
-    public function clear($key)
+    public function clear() : void
     {
         $directory = new \DirectoryIterator($this->path);
         foreach($directory as $file) {
-            unlink($file->getPath());
+            if($file->getFilename() != '.' && $file->getFilename() != '..') {
+                unlink($file->getPathname());
+            }
         }
     }
 
-    public function delete($key)
+    public function delete(string $key) : void
     {
         unlink($this->getPath($key));
     }
 
-    public function exists($key)
+    public function exists(string  $key):bool
     {
-        return file_exists($this->getPath($key));
-    }
-
-    public function read($key)
-    {
-        if($this->exists($key)) {
-            $item = unserialize(file_get_contents($this->getPath($key)));
-            if($item['expires'] < time()) {
+        if(file_exists($this->getPath($key))) {
+            $this->tempItem = unserialize(file_get_contents($this->getPath($key)));
+            if($this->tempItem['expires'] < time()) {
                 $this->delete($key);
                 return false;
             }
-            return $item['object'];
+            return true;
         }
         return false;
     }
 
-    public function write($key, $value)
+    public function read(string $key)
     {
-        file_put_contents($this->getPath($key), 
-            serialize([
-                'expires' => time() + $this->ttl,
-                'object' => $value
-            ])
-        );
+        if($this->exists($key)) {
+            return $this->tempItem['object'];
+        }
+        return null;
+    }
+
+    public function write(string $key, $value, int $ttl) : void
+    {
+        file_put_contents($this->getPath($key), serialize(['expires' => time() + $ttl, 'object' => $value]));
     }
 }

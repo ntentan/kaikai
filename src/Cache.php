@@ -6,22 +6,28 @@ class Cache
 {
 
     private $backend;
+    private $defaultTtl = 3600;
 
     public function __construct(CacheBackendInterface $backend)
     {
         $this->backend = $backend;
     }
 
-    public function write($key, $value)
+    public function setDefaultTtl($ttl)
     {
-        $this->backend->write($key, $value);
+        $this->defaultTtl = $ttl;
     }
 
-    public function read($key, $notExists = null)
+    public function write($key, $value, $ttl = null)
+    {
+        $this->backend->write($key, $value, $ttl ?? $this->defaultTtl);
+    }
+
+    public function read($key, $factory = null)
     {
         $object = $this->backend->read($key);
-        if ($object === false && is_callable($notExists)) {
-            $object = $notExists();
+        if ($object === null && is_callable($factory)) {
+            $object = $factory();
             $this->write($key, $object);
         }
         return $object;

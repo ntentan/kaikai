@@ -2,30 +2,32 @@
 
 namespace ntentan\kaikai\backends;
 
-class VolatileCache implements \ntentan\kaikai\CacheBackendInterface
+use ntentan\kaikai\CacheBackendInterface;
+
+class VolatileCache implements CacheBackendInterface
 {
     private $cache;
-    public function clear($key)
+    public function clear(): void
     {
         $this->cache = [];
     }
 
-    public function delete($key)
+    public function delete(string $key): void
     {
         unset($this->cache[$key]);
     }
 
-    public function exists($key)
+    public function exists(string $key): bool
     {
-        isset($this->cache[$key]);
+        return isset($this->cache[$key]);
     }
 
-    public function read($key)
+    public function read(string $key)
     {
         return isset($this->cache[$key]) ? $this->cache[$key] : false;
     }
 
-    public function write($key, $value)
+    public function write(string $key, $value, int $ttl): void
     {
         $this->cache[$key] = $value;
     }

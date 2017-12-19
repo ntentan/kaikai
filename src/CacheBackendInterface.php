@@ -4,9 +4,9 @@ namespace ntentan\kaikai;
 
 interface CacheBackendInterface
 {
-    public function write($key, $value);
-    public function read($key);
-    public function exists($key);
-    public function delete($key);
-    public function clear($key);
+    public function write(string $key, $value, int $ttl) : void;
+    public function read(string $key);
+    public function exists(string $key) : bool;
+    public function delete(string $key) : void;
+    public function clear() : void;
 }
