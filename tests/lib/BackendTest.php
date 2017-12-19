@@ -22,6 +22,9 @@ abstract class BackendTest extends TestCase
         $this->cache->write('test', 'Hello!', 100);
         $this->assertEquals('Hello!', $this->cache->read('test'));
         $this->assertEquals(null, $this->cache->read('nonexistent'));
+
+        $this->cache->write('object', new Dummy(), 100);
+        $this->assertInstanceOf(Dummy::class, $this->cache->read('object'));
     }
 
     public function testExists()
