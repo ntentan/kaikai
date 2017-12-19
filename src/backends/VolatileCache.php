@@ -4,9 +4,15 @@ namespace ntentan\kaikai\backends;
 
 use ntentan\kaikai\CacheBackendInterface;
 
+/**
+ * A cache backend that holds its values for the lifetime of the session.
+ *
+ * @package ntentan\kaikai\backends
+ */
 class VolatileCache implements CacheBackendInterface
 {
     private $cache;
+
     public function clear(): void
     {
         $this->cache = [];
