@@ -30,7 +30,7 @@ class VolatileCache implements CacheBackendInterface
 
     public function read(string $key)
     {
-        return isset($this->cache[$key]) ? $this->cache[$key] : false;
+        return $this->cache[$key] ?? null;
     }
 
     public function write(string $key, $value, int $ttl): void
