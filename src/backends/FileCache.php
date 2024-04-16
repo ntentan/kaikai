@@ -15,9 +15,9 @@ class FileCache implements CacheBackendInterface
 
     private $tempItem;
 
-    public function __construct($options = null)
+    public function __construct(?string $path = null)
     {
-        $this->path = isset($options['path']) ? $options['path'] : 'cache';
+        $this->path = $path ?? 'cache';
     }
 
     private function getPath($key)
