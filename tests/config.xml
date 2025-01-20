@@ -4,10 +4,10 @@
         <testsuite name="Base test suite">
             <directory>cases</directory>
         </testsuite>
-    </testsuites>    
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
             <directory suffix=".php">../src</directory>
-        </whitelist>
-    </filter>    
+        </include>
+    </coverage>
 </phpunit>
