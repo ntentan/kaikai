@@ -12,7 +12,7 @@ abstract class BackendTest extends TestCase
 
     abstract public function getBackend();
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->cache = $this->getBackend();
     }
@@ -44,7 +44,9 @@ abstract class BackendTest extends TestCase
 
     public function testExpires()
     {
-        $this->cache->write('expires', 'Should Expire', 10);
+        $this->cache->write('expires', 'Should Expire', 2);
+        $this->assertEquals(true, $this->cache->exists('expires'));
+        sleep(3);
         $this->assertEquals(false, $this->cache->exists('expires'));
         $this->assertEquals(null, $this->cache->read('expires'));
     }

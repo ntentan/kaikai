@@ -14,17 +14,17 @@ class FileCacheTest extends BackendTest
 
     private $time;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         vfsStream::setup('cache');
-        $this->time = $this->getFunctionMock('\ntentan\kaikai\backends\\', 'time');
-        $this->time->expects($this->at(0))->willReturn(10000);
-        $this->time->expects($this->at(1))->willReturn(10100);
+//        $this->time = $this->getFunctionMock('\ntentan\kaikai\backends\\', 'time');
+//        $this->time->expects($this->once(0))->willReturn(10000);
+//        $this->time->expects($this->once(1))->willReturn(10100);
     }
 
     public function getBackend()
     {
-        return new FileCache(['path' => vfsStream::url('cache')]);
+        return new FileCache(vfsStream::url('cache'));
     }
 }
