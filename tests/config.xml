@@ -5,9 +5,9 @@
             <directory>cases</directory>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
             <directory suffix=".php">../src</directory>
         </include>
-    </coverage>
+    </source>
 </phpunit>
