@@ -15,14 +15,14 @@ class Cache
      *
      * @var CacheBackendInterface
      */
-    private $backend;
+    private CacheBackendInterface $backend;
 
     /**
      * The lenght of the default lifetime of items written to cache.
      *
      * @var int
      */
-    private $defaultTtl = 3600;
+    private int $defaultTtl = 3600;
 
     /**
      * Creates a new Cache wrapper.
@@ -49,9 +49,9 @@ class Cache
      *
      * @param string $key A unique key for the item to be written.
      * @param mixed $value
-     * @param int|null $ttl
+     * @param ?int $ttl
      */
-    public function write(string $key, $value, int $ttl = null) : void
+    public function write(string $key, mixed $value, ?int $ttl = null) : void
     {
         $this->backend->write($key, $value, $ttl ?? $this->defaultTtl);
     }
@@ -63,12 +63,12 @@ class Cache
      * @param callable|null $factory
      * @return mixed
      */
-    public function read(string $key, callable $factory = null)
+    public function read(string $key, ?callable $factory, ?int $ttl = null) : mixed
     {
         $object = $this->backend->read($key);
         if ($object === null) {
             $object = $factory();
-            $this->write($key, $object);
+            $this->write($key, $object, $ttl ?? $this->defaultTtl);
         }
         return $object;
     }

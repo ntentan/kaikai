@@ -11,16 +11,16 @@ use ntentan\kaikai\CacheBackendInterface;
  */
 class FileCache implements CacheBackendInterface
 {
-    private $path;
+    private string $path;
 
-    private $tempItem;
+    private string $tempItem;
 
     public function __construct(?string $path = null)
     {
         $this->path = $path ?? 'cache';
     }
 
-    private function getPath($key)
+    private function getPath(string $key): string
     {
         return "{$this->path}" . DIRECTORY_SEPARATOR . md5($key);
     }

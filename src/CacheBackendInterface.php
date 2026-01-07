@@ -17,7 +17,7 @@ interface CacheBackendInterface
      * @param int $ttl The lifetime of items in the cache.
      * @return void
      */
-    public function write(string $key, $value, int $ttl) : void;
+    public function write(string $key, mixed $value, int $ttl) : void;
 
     /**
      * Reads values from the cache.
@@ -25,7 +25,7 @@ interface CacheBackendInterface
      * @param string $key The unique key of the item to be read.
      * @return mixed Returns null when item is not in the cache
      */
-    public function read(string $key);
+    public function read(string $key): mixed;
 
     /**
      * Checks if an item exists in the cache.
