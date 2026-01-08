@@ -13,7 +13,7 @@ class FileCache implements CacheBackendInterface
 {
     private string $path;
 
-    private string $tempItem;
+    private array $tempItem;
 
     public function __construct(?string $path = null)
     {
@@ -44,7 +44,7 @@ class FileCache implements CacheBackendInterface
     {
         if (file_exists($this->getPath($key))) {
             $this->tempItem = unserialize(file_get_contents($this->getPath($key)));
-            if ($this->tempItem['expires'] < time()) {
+            if ($this->tempItem['expires'] != null && $this->tempItem['expires'] < time()) {
                 $this->delete($key);
                 return false;
             }
@@ -53,7 +53,7 @@ class FileCache implements CacheBackendInterface
         return false;
     }
 
-    public function read(string $key)
+    public function read(string $key): mixed
     {
         if ($this->exists($key)) {
             return $this->tempItem['object'];

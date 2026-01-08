@@ -7,6 +7,11 @@
         "php-mock/php-mock-phpunit": "@stable",
         "mikey179/vfsstream": "@stable"
     },
+    "suggest": {
+        "ext-redis": "Required for Redis cache backend with PhpRedis driver",
+        "ext-memcached": "Required for Memcached cache backend",
+        "predis/predis": "Required for Redis cache backend with Predis driver"
+    },
     "authors": [
         {
             "name": "ekow",

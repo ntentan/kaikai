@@ -63,7 +63,7 @@ class Cache
      * @param callable|null $factory
      * @return mixed
      */
-    public function read(string $key, ?callable $factory, ?int $ttl = null) : mixed
+    public function read(string $key, ?callable $factory = null, ?int $ttl = null) : mixed
     {
         $object = $this->backend->read($key);
         if ($object === null) {
