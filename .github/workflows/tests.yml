@@ -11,9 +11,12 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
+          extensions: redis
           tools: composer
       - name: Running composer
         run: composer install
+      - name: Adding suggested packages
+        run: composer require predis/predis:^3.3
       - name: Running php unit tests
         run: vendor/bin/phpunit  --coverage-clover coverage.clover -c tests/config.xml
       - name: Downloading Ocular Tool
