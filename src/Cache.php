@@ -93,5 +93,4 @@ class Cache
     {
         $this->backend->delete($key);
     }
-
 }
