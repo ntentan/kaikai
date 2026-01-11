@@ -20,7 +20,8 @@ class PhpRedisDriver implements Driver
 
     public function get(string $key): mixed
     {
-        return $this->client->get($key);
+        $value = $this->client->get($key);
+        return $value === false ? null : $value;
     }
 
     public function exists(string $key): bool

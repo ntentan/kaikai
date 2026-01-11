@@ -31,6 +31,10 @@ class RedisCache implements CacheBackendInterface
 
     public function read(string $key): mixed
     {
+        $data = $this->driver->get($this->getKey($key));
+        if ($data === null) {
+            return null;
+        }
         return unserialize($this->driver->get($this->getKey($key)));
     }
 
