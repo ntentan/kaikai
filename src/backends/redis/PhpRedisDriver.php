@@ -13,7 +13,7 @@ class PhpRedisDriver implements Driver
         $this->client = $client;
     }
 
-    public function set(string $key, mixed $value, int $ttl): void
+    public function setex(string $key, mixed $value, int $ttl): void
     {
         $this->client->setex($key, $ttl, $value);
     }
@@ -39,5 +39,10 @@ class PhpRedisDriver implements Driver
         while (false !== ($keys = $this->client->scan($iterator, "$prefix:*", 100))) {
             $this->client->del($keys);
         }
+    }
+
+    public function set(string $key, mixed $value): void
+    {
+        $this->client->set($key, $value);
     }
 }

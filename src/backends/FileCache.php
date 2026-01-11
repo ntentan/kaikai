@@ -61,8 +61,11 @@ class FileCache implements CacheBackendInterface
         return null;
     }
 
-    public function write(string $key, $value, int $ttl): void
+    public function write(string $key, $value, ?int $ttl): void
     {
-        file_put_contents($this->getPath($key), serialize(['expires' => time() + $ttl, 'object' => $value]));
+        file_put_contents(
+            $this->getPath($key),
+            serialize(['expires' => $ttl + time(), 'object' => $value])
+        );
     }
 }

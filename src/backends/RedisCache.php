@@ -20,9 +20,9 @@ class RedisCache implements CacheBackendInterface
         return "{$this->prefix}:{$key}";
     }
 
-    public function write(string $key, mixed $value, int $ttl): void
+    public function write(string $key, mixed $value, ?int $ttl): void
     {
-        $this->driver->set($this->getKey($key), serialize($value), $ttl);
+        $this->driver->setex($this->getKey($key), serialize($value), $ttl);
     }
 
     public function read(string $key): mixed

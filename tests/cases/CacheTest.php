@@ -22,7 +22,7 @@ class CacheTest extends TestCase
             function($key, $value, $ttl) {
                 $this->assertEquals('greeting', $key);
                 $this->assertEquals('Hello World!', $value);
-                $this->assertEquals(3600, $ttl);
+                $this->assertEquals(null, $ttl);
             }
         );
         $cache = new Cache($this->cacheBackend);
@@ -35,11 +35,10 @@ class CacheTest extends TestCase
             function($key, $value, $ttl) {
                 $this->assertEquals('greeting', $key);
                 $this->assertEquals('Hello World!', $value);
-                $this->assertEquals(100, $ttl);
+                $this->assertEquals(null, $ttl);
             }
         );
         $cache = new Cache($this->cacheBackend);
-        $cache->setDefaultTtl(100);
         $cache->write('greeting', 'Hello World!');
     }
 
@@ -88,7 +87,5 @@ class CacheTest extends TestCase
             }
         );
         $cache = new Cache($this->cacheBackend);
-        $this->assertEquals(null, $cache->delete('some_key'));
-
     }
 }

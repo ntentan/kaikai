@@ -14,10 +14,10 @@ interface CacheBackendInterface
      *
      * @param string $key A unique key for the value to be written.
      * @param mixed $value Value to be written.
-     * @param int $ttl The lifetime of items in the cache.
+     * @param ?int $ttl The lifetime of items in the cache in seconds. Null means item is cached indefinitely.
      * @return void
      */
-    public function write(string $key, mixed $value, int $ttl) : void;
+    public function write(string $key, mixed $value, ?int $ttl) : void;
 
     /**
      * Reads values from the cache.

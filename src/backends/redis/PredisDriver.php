@@ -13,7 +13,7 @@ class PredisDriver implements Driver
         $this->client = $client;
     }
 
-    public function set(string $key, mixed $value, int $ttl): void
+    public function setex(string $key, mixed $value, int $ttl): void
     {
         $this->client->setex($key, $ttl, $value);
     }
@@ -44,5 +44,10 @@ class PredisDriver implements Driver
                 $this->client->del($keys);
             }
         } while ($cursor !== '0');
+    }
+
+    public function set(string $key, mixed $value): void
+    {
+        $this->client->set($key, $value);
     }
 }
