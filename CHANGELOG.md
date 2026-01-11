@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+v0.7.3 - 2026-01-11
+-------------------
+- Fixed broken persistent storage of cache data in File caching backend when ttl is set to null.
+
 v0.7.2 - 2026-01-11
 -------------------
 - Fixed broken persistent storage of cache data in Redis and File caching backends when ttl is set to null.
