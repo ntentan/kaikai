@@ -87,5 +87,6 @@ class CacheTest extends TestCase
             }
         );
         $cache = new Cache($this->cacheBackend);
+        $cache->delete('some_key');
     }
 }
