@@ -65,7 +65,7 @@ class FileCache implements CacheBackendInterface
     {
         file_put_contents(
             $this->getPath($key),
-            serialize(['expires' => $ttl + time(), 'object' => $value])
+            serialize(['expires' => $ttl === null ? null : $ttl + time(), 'object' => $value])
         );
     }
 }

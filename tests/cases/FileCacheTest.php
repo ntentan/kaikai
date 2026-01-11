@@ -24,4 +24,13 @@ class FileCacheTest extends BackendTest
     {
         return new FileCache(vfsStream::url('cache'));
     }
+
+    public function testIndifiniteExpiration()
+    {
+        $this->cache->write('permanent', 'I persist', null);
+        $this->assertEquals(true, $this->cache->exists('permanent'));
+        $stored = file_get_contents(vfsStream::url('cache/' . md5('permanent')));
+        $data = unserialize($stored);
+        $this->assertEquals(null, $data['expires']);
+    }
 }

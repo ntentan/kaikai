@@ -2,13 +2,12 @@
 
 namespace ntentan\kaikai\tests\lib;
 
-
-use ntentan\kaikai\Cache;
+use ntentan\kaikai\CacheBackendInterface;
 use PHPUnit\Framework\TestCase;
 
 abstract class BackendTest extends TestCase
 {
-    private $cache;
+    protected CacheBackendInterface $cache;
 
     abstract public function getBackend();
 
