@@ -80,4 +80,13 @@ class Cache
     {
         $this->backend->delete($key);
     }
+
+    public static function getService(array $config): array
+    {
+        $driver = "\\ntentan\\kaikai\\backends\\" . ucfirst($config['driver']) . "Cache";
+        return [
+            CacheBackendInterface::class => $driver
+        ];
+    }
 }
+
