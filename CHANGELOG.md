@@ -1,5 +1,14 @@
 CHANGELOG
 =========
+v0.7.5 - 2026-09-23
+-------------------
+- Added `Cache::getService()` convenience function for dependency injection container configuration.
+- Fixed `Cache::read()` to return null when item is not found and no factory callable is provided.
+- Added comprehensive unit tests for `Cache::read()` and `Cache::getService()`.
+- Added PHPStan static analysis configuration and CI workflow job.
+- Added README documentation and Packagist badges.
+- Fixed broken Redis test suite when optional Predis library is not installed.
+
 v0.7.4 - 2026-01-11
 -------------------
 - Fixed broken persistent storage of cache data in Redis caching backend when ttl is set to null.
