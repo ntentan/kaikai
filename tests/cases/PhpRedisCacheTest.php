@@ -14,7 +14,7 @@ class PhpRedisCacheTest extends BackendTest
         if (!class_exists('Redis')) {
             $this->markTestSkipped('Redis extension not installed');
         }
-        $client = $this->createMock(Redis::class);
+        $client = $this->createStub(Redis::class);
             
         // Simple in-memory storage for the mock
         $storage = [];

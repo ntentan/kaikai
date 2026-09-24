@@ -23,3 +23,20 @@ jobs:
         run: composer global require scrutinizer/ocular dev-master
       - name: Uploading Code Metrics
         run: php ~/.composer/vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
+
+  PHPStan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          extensions: redis
+          tools: composer
+      - name: Running composer
+        run: composer install
+      - name: Adding suggested packages
+        run: composer require predis/predis:^3.3
+      - name: Running PHPStan
+        run: composer phpstan
