@@ -5,7 +5,8 @@
     "require-dev": {
         "phpunit/phpunit" : "@stable",
         "php-mock/php-mock-phpunit": "@stable",
-        "mikey179/vfsstream": "@stable"
+        "mikey179/vfsstream": "@stable",
+        "phpstan/phpstan": "^2.2"
     },
     "suggest": {
         "ext-redis": "Required for Redis cache backend with PhpRedis driver",
@@ -23,5 +24,9 @@
             "ntentan\\kaikai\\": "src/",
             "ntentan\\kaikai\\tests\\" : "tests/"
         }
+    },
+    "scripts": {
+        "phpstan": "phpstan analyse",
+        "test": "phpunit -c tests/config.xml"
     }
 }

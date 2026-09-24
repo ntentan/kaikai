@@ -44,26 +44,91 @@ class CacheTest extends TestCase
 
     public function testRead()
     {
-        $this->cacheBackend->expects($this->once())->method('read')->willReturnCallback(
-            function ($key) {
-                $this->assertEquals('greeting', $key);
-                return 'Returned!';
-            }
-        );
+        $this->cacheBackend->expects($this->once())->method('read')->with('greeting')->willReturn('Returned!');
+        $this->cacheBackend->expects($this->never())->method('write');
         $cache = new Cache($this->cacheBackend);
         $this->assertEquals('Returned!', $cache->read('greeting'));
     }
 
+    public function testReadExistingItemDoesNotInvokeFactory()
+    {
+        $this->cacheBackend->expects($this->once())->method('read')->with('greeting')->willReturn('Cached Value');
+        $this->cacheBackend->expects($this->never())->method('write');
+        $cache = new Cache($this->cacheBackend);
+
+        $factoryCalled = false;
+        $result = $cache->read('greeting', function() use (&$factoryCalled) {
+            $factoryCalled = true;
+            return 'New Value';
+        });
+
+        $this->assertEquals('Cached Value', $result);
+        $this->assertFalse($factoryCalled);
+    }
+
+    public function testReadMissingItemReturnsNullWhenNoFactory()
+    {
+        $this->cacheBackend->expects($this->once())->method('read')->with('missing_key')->willReturn(null);
+        $this->cacheBackend->expects($this->never())->method('write');
+        $cache = new Cache($this->cacheBackend);
+
+        $this->assertNull($cache->read('missing_key'));
+    }
+
     public function testReadFunction()
     {
-        $this->cacheBackend->expects($this->once())->method('read')->willReturnCallback(
-            function($key) {
-                $this->assertEquals('greeting', $key);
-                return 'Returned!';
-            }
-        );
+        $this->cacheBackend->expects($this->once())->method('read')->with('greeting')->willReturn(null);
+        $this->cacheBackend->expects($this->once())->method('write')->with('greeting', 'Generated!', null);
         $cache = new Cache($this->cacheBackend);
-        $this->assertEquals('Returned!', $cache->read('greeting'));
+
+        $factoryCalled = false;
+        $result = $cache->read('greeting', function() use (&$factoryCalled) {
+            $factoryCalled = true;
+            return 'Generated!';
+        });
+
+        $this->assertEquals('Generated!', $result);
+        $this->assertTrue($factoryCalled);
+    }
+
+    public function testReadMissingItemWithFactoryAndCustomTtl()
+    {
+        $this->cacheBackend->expects($this->once())->method('read')->with('greeting')->willReturn(null);
+        $this->cacheBackend->expects($this->once())->method('write')->with('greeting', 'Generated with TTL!', 3600);
+        $cache = new Cache($this->cacheBackend);
+
+        $result = $cache->read('greeting', function() {
+            return 'Generated with TTL!';
+        }, 3600);
+
+        $this->assertEquals('Generated with TTL!', $result);
+    }
+
+    public function testReadMissingItemFactoryReturnsNull()
+    {
+        $this->cacheBackend->expects($this->once())->method('read')->with('null_key')->willReturn(null);
+        $this->cacheBackend->expects($this->once())->method('write')->with('null_key', null, 500);
+        $cache = new Cache($this->cacheBackend);
+
+        $result = $cache->read('null_key', function() {
+            return null;
+        }, 500);
+
+        $this->assertNull($result);
+    }
+
+    public function testReadMissingItemWithNegativeTtlThrowsException()
+    {
+        $this->cacheBackend->expects($this->once())->method('read')->with('invalid_ttl')->willReturn(null);
+        $this->cacheBackend->expects($this->never())->method('write');
+        $cache = new Cache($this->cacheBackend);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('TTL for cache must be a positive integer');
+
+        $cache->read('invalid_ttl', function() {
+            return 'value';
+        }, -10);
     }
 
 
@@ -88,5 +153,19 @@ class CacheTest extends TestCase
         );
         $cache = new Cache($this->cacheBackend);
         $cache->delete('some_key');
+    }
+
+    #[\PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations]
+    public function testGetService()
+    {
+        $drivers = ['file', 'volatile', 'redis'];
+        foreach ($drivers as $driver) {
+            $service = Cache::getService(['driver' => $driver]);
+            $expectedClass = "\\ntentan\\kaikai\\backends\\" . ucfirst($driver) . "Cache";
+            $this->assertArrayHasKey(CacheBackendInterface::class, $service);
+            $this->assertEquals($expectedClass, $service[CacheBackendInterface::class]);
+            $this->assertTrue(class_exists($service[CacheBackendInterface::class]));
+            $this->assertTrue(is_subclass_of($service[CacheBackendInterface::class], CacheBackendInterface::class));
+        }
     }
 }

@@ -53,7 +53,7 @@ class Cache
     public function read(string $key, ?callable $factory = null, ?int $ttl = null) : mixed
     {
         $object = $this->backend->read($key);
-        if ($object === null) {
+        if ($object === null && $factory !== null) {
             $object = $factory();
             $this->write($key, $object, $ttl);
         }

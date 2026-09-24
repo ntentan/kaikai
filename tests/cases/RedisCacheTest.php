@@ -11,7 +11,7 @@ class RedisCacheTest extends BackendTest
 {
     public function getBackend()
     {
-        $client = $this->createMock(MockClient::class);
+        $client = $this->createStub(MockClient::class);
             
         // Simple in-memory storage for the mock
         $storage = [];
