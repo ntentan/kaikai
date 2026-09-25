@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+v0.7.6 - 2026-09-25
+-------------------
+- Cleanup documentation
+
 v0.7.5 - 2026-09-23
 -------------------
 - Added `Cache::getService()` convenience function for dependency injection container configuration.
