@@ -81,6 +81,11 @@ class Cache
         $this->backend->delete($key);
     }
 
+    /**
+     * Service configuration for the panie dependency injection container.
+     * 
+     * @param
+     */
     public static function getService(array $config): array
     {
         $driver = "\\ntentan\\kaikai\\backends\\" . ucfirst($config['driver']) . "Cache";
