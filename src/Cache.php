@@ -84,7 +84,8 @@ class Cache
     /**
      * Service configuration for the panie dependency injection container.
      * 
-     * @param
+     * @param array<string, mixed> $config
+     * @return array<string, string>
      */
     public static function getService(array $config): array
     {

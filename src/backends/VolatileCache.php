@@ -11,7 +11,11 @@ use ntentan\kaikai\CacheBackendInterface;
  */
 class VolatileCache implements CacheBackendInterface
 {
-    private $cache;
+    /**
+     * An associative array that holds the cached items in memory.
+     * @var array<string, mixed>
+     */
+    private array $cache;
 
     public function clear(): void
     {
